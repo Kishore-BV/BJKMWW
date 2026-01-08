@@ -1,0 +1,7 @@
+{
+  "name": "BJK Mobile Water Wash",
+  "description": "Professional doorstep mobile car washing and detailing services. Book your wash today and we'll come to you with our high-tech equipment.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
