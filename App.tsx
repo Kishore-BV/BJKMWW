@@ -6,6 +6,7 @@ import Services from './components/Services';
 import About from './components/About';
 import Footer from './components/Footer';
 import BookingFlow from './components/BookingFlow';
+import ChatBot from './components/ChatBot';
 import { CONTACT } from './constants';
 import { BookingData } from './types';
 
@@ -39,33 +40,44 @@ const App: React.FC = () => {
 
   if (view === 'success') {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center bg-white p-10 rounded-[40px] shadow-2xl border border-gray-100 animate-fadeIn">
-          <div className="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-100">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full text-center bg-white p-8 md:p-12 rounded-[48px] shadow-2xl border border-white animate-fadeIn">
+          <div className="w-24 h-24 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-green-100 ring-8 ring-green-50">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">Booking Confirmed!</h2>
-          <div className="text-slate-600 mb-8 leading-relaxed">
-            Thank you, <span className="font-bold text-slate-900">{lastBooking?.name}</span>! Your <span className="text-orange-600 font-semibold uppercase tracking-wider text-xs px-2 py-0.5 bg-orange-50 rounded-md">Mobile Wash</span> is scheduled for <span className="font-bold text-slate-900">{lastBooking?.date}</span> at <span className="font-bold text-slate-900">{lastBooking?.time}</span>. 
-            Our mobile unit will contact you shortly on <span className="font-bold text-slate-900">{lastBooking?.phone}</span>.
+          
+          <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Booking Confirmed!</h2>
+          
+          <div className="text-slate-600 mb-8 leading-relaxed px-2">
+            Great news <span className="font-bold text-slate-900">{lastBooking?.name}</span>! Your doorstep mobile wash is locked in. We'll arrive at your location on <span className="font-bold text-slate-900">{lastBooking?.date}</span> during the <span className="font-bold text-slate-900">{lastBooking?.time}</span> slot.
           </div>
           
-          <div className="bg-slate-50 p-6 rounded-3xl mb-8 text-left border border-slate-200">
-            <h4 className="font-bold text-[10px] text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-200 pb-2">SERVICE DETAILS</h4>
+          <div className="bg-slate-50 rounded-[32px] p-6 mb-8 text-left border border-slate-200">
+            <div className="flex items-center space-x-2 mb-5 border-b border-slate-200 pb-3">
+              <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
+              <h4 className="font-black text-[11px] text-slate-400 uppercase tracking-widest">Appointment Summary</h4>
+            </div>
+            
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 text-xs font-semibold uppercase">Plan:</span> 
-                <span className="font-bold text-slate-900 text-sm">BJK WASH-0{lastBooking?.planId.split('-')[1]}</span>
+                <span className="text-slate-500 text-xs font-bold uppercase tracking-tight">Wash Plan</span> 
+                <span className="font-black text-slate-900 text-sm bg-orange-100 text-orange-700 px-3 py-1 rounded-full">
+                  BJK WASH-0{lastBooking?.planId.split('-')[1]}
+                </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-slate-500 text-xs font-semibold uppercase">Vehicle:</span> 
-                <span className="font-bold text-slate-900 text-sm uppercase">{lastBooking?.carModel}</span>
-              </div>
+              
               <div className="flex flex-col space-y-1">
-                <span className="text-slate-500 text-xs font-semibold uppercase">Doorstep Address:</span> 
-                <span className="font-medium text-slate-900 text-sm leading-snug break-words bg-white/50 p-2 rounded-lg border border-slate-100">
+                <span className="text-slate-500 text-xs font-bold uppercase tracking-tight">Vehicle Details</span> 
+                <span className="font-black text-slate-900 text-base uppercase bg-white border border-slate-100 p-3 rounded-2xl shadow-sm">
+                  {lastBooking?.carModel}
+                </span>
+              </div>
+              
+              <div className="flex flex-col space-y-1">
+                <span className="text-slate-500 text-xs font-bold uppercase tracking-tight">Service Address</span> 
+                <span className="font-medium text-slate-700 text-sm leading-snug bg-white/50 p-3 rounded-2xl border border-slate-100">
                   {lastBooking?.address}
                 </span>
               </div>
@@ -75,18 +87,18 @@ const App: React.FC = () => {
           <div className="flex flex-col space-y-3">
             <button 
               onClick={handleBackToHome}
-              className="w-full py-4 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition-all shadow-lg shadow-orange-200 active:scale-95"
+              className="w-full py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-black transition-all shadow-xl active:scale-95"
             >
-              Back to Home
+              Finish & Exit
             </button>
             <a 
-              href={`https://wa.me/${CONTACT.whatsapp.replace('+', '')}?text=Hi BJK Wash, I just booked a wash for ${lastBooking?.date}.`}
+              href={`https://wa.me/${CONTACT.whatsapp.replace('+', '')}?text=Hi BJK Wash, I've booked a service for my vehicle (${lastBooking?.carModel}) on ${lastBooking?.date}. Please confirm!`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 transition-all flex items-center justify-center space-x-2"
+              className="w-full py-4 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 transition-all flex items-center justify-center space-x-2 shadow-lg shadow-green-100"
             >
               <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.29-4.143c1.589.943 3.143 1.411 4.746 1.412 5.403 0 9.803-4.397 9.805-9.802 0-2.618-1.02-5.08-2.871-6.932-1.851-1.852-4.311-2.872-6.93-2.873-5.405 0-9.803 4.398-9.806 9.801 0 1.688.455 3.334 1.316 4.77l-.98 3.58 3.72-.976zm11.365-5.394c-.273-.136-1.62-.8-1.869-.89-.25-.089-.431-.136-.613.136-.182.273-.705.89-.863 1.071-.159.182-.318.204-.591.068-.273-.136-1.152-.424-2.195-1.353-.811-.724-1.359-1.618-1.518-1.89-.159-.273-.017-.42.12-.555.123-.122.273-.318.409-.477.136-.159.182-.273.273-.454.091-.182.045-.341-.023-.477-.068-.136-.613-1.477-.841-2.022-.222-.53-.447-.457-.613-.466-.159-.008-.341-.011-.523-.011-.182 0-.477.068-.727.341-.25.273-.954.932-.954 2.273s.977 2.636 1.114 2.818c.136.182 1.921 2.933 4.653 4.111.649.28 1.157.447 1.552.572.652.208 1.246.179 1.715.109.523-.078 1.62-.663 1.847-1.303.227-.641.227-1.182.159-1.303-.068-.11-.25-.179-.523-.315z"/></svg>
-              <span>Confirm on WhatsApp</span>
+              <span>WhatsApp Us</span>
             </a>
           </div>
         </div>
@@ -95,7 +107,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white selection:bg-orange-200 selection:text-orange-900">
+    <div className="min-h-screen bg-white selection:bg-orange-200 selection:text-orange-900 relative">
       <Navbar 
         onBookNow={handleBookNow} 
         isBookingView={view === 'booking'} 
@@ -233,6 +245,7 @@ const App: React.FC = () => {
         />
       )}
       
+      <ChatBot />
       <Footer />
     </div>
   );
