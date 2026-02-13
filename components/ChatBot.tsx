@@ -1,6 +1,5 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { SERVICE_PACKAGES, CONTACT } from '../constants';
 
 const ChatBot: React.FC = () => {
@@ -20,29 +19,6 @@ const ChatBot: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const systemInstruction = `
-    You are the official AI Assistant for BJK Mobile Water Wash. 
-    BJK is a 100% mobile doorstep car washing company based in Tamil Nadu.
-    
-    Service Packages:
-    1. BJK WASH-01 (Rs. 800): Basic comprehensive cleaning (Waterwash, Interior, Vacuum, Wheel).
-    2. BJK-02 (Rs. 1000): Double-deep clean (2 times Waterwash, Interior, Vacuum, Wheel). Our most popular package.
-    3. BJK-03 (Rs. 1500): Premium steamer package (Steamer cleaning, inter steamer, inter polish).
-    
-    Key Facts:
-    - We bring the service center to the customer's doorstep/garage.
-    - We use high-pressure machines and steam cleaners.
-    - Contact: ${CONTACT.phones.join(' or ')}.
-    - GPay: ${CONTACT.gpay}.
-    - We serve all of Tamil Nadu.
-    - We are eco-friendly, using 70% less water.
-    
-    Guidelines:
-    - Be professional, friendly, and helpful.
-    - Keep answers concise.
-    - If asked to book, encourage them to click the "Book Now" button on the site.
-  `;
-
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -53,32 +29,25 @@ const ChatBot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const chat = ai.chats.create({
-        model: 'gemini-3-pro-preview',
-        config: {
-          systemInstruction: systemInstruction,
+      const response = await fetch('https://n8n.kishoren8n.in/webhook/2cf00af6-03e1-4407-9765-a66b01233fe9/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        history: messages.map(m => ({
-          role: m.role,
-          parts: [{ text: m.text }]
-        }))
+        body: JSON.stringify({
+          message: userMessage,
+          sessionId: 'web-session-' + Date.now()
+        })
       });
 
-      const responseStream = await chat.sendMessageStream({ message: userMessage });
-      
-      let fullResponse = '';
-      setMessages(prev => [...prev, { role: 'model', text: '' }]);
-
-      for await (const chunk of responseStream) {
-        const chunkText = chunk.text;
-        fullResponse += chunkText;
-        setMessages(prev => {
-          const updated = [...prev];
-          updated[updated.length - 1] = { role: 'model', text: fullResponse };
-          return updated;
-        });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+
+      const data = await response.json();
+      const botResponse = data.output || data.response || data.message || "I received your message!";
+
+      setMessages(prev => [...prev, { role: 'model', text: botResponse }]);
     } catch (error) {
       console.error("Chat error:", error);
       setMessages(prev => [...prev, { role: 'model', text: "Sorry, I'm having trouble connecting right now. Please try again or call us directly!" }]);
@@ -92,9 +61,8 @@ const ChatBot: React.FC = () => {
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-24 right-6 md:bottom-8 md:right-8 z-50 p-4 rounded-full shadow-2xl transition-all transform hover:scale-110 active:scale-95 ${
-          isOpen ? 'bg-gray-900 rotate-90' : 'bg-orange-600'
-        }`}
+        className={`fixed bottom-24 right-6 md:bottom-8 md:right-8 z-50 p-4 rounded-full shadow-2xl transition-all transform hover:scale-110 active:scale-95 ${isOpen ? 'bg-gray-900 rotate-90' : 'bg-orange-600'
+          }`}
       >
         {isOpen ? (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -112,9 +80,8 @@ const ChatBot: React.FC = () => {
 
       {/* Chat Window */}
       <div
-        className={`fixed bottom-44 right-6 md:bottom-28 md:right-8 z-50 w-[calc(100vw-3rem)] md:w-96 h-[500px] bg-white rounded-3xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden transition-all duration-300 transform origin-bottom-right ${
-          isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none'
-        }`}
+        className={`fixed bottom-44 right-6 md:bottom-28 md:right-8 z-50 w-[calc(100vw-3rem)] md:w-96 h-[500px] bg-white rounded-3xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden transition-all duration-300 transform origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none'
+          }`}
       >
         {/* Header */}
         <div className="bg-gray-900 p-4 flex items-center justify-between">
@@ -142,11 +109,10 @@ const ChatBot: React.FC = () => {
               className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
             >
               <div
-                className={`max-w-[85%] p-3 rounded-2xl text-sm ${
-                  msg.role === 'user'
-                    ? 'bg-orange-600 text-white rounded-br-none shadow-md'
-                    : 'bg-white text-gray-800 border border-gray-100 rounded-bl-none shadow-sm'
-                }`}
+                className={`max-w-[85%] p-3 rounded-2xl text-sm ${msg.role === 'user'
+                  ? 'bg-orange-600 text-white rounded-br-none shadow-md'
+                  : 'bg-white text-gray-800 border border-gray-100 rounded-bl-none shadow-sm'
+                  }`}
               >
                 {msg.text || (isLoading && i === messages.length - 1 && <span className="flex space-x-1"><span className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></span><span className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-75"></span><span className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-150"></span></span>)}
               </div>
@@ -169,9 +135,8 @@ const ChatBot: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className={`p-2 rounded-lg transition-all ${
-                isLoading || !input.trim() ? 'text-gray-400' : 'text-orange-600 hover:bg-orange-50'
-              }`}
+              className={`p-2 rounded-lg transition-all ${isLoading || !input.trim() ? 'text-gray-400' : 'text-orange-600 hover:bg-orange-50'
+                }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />

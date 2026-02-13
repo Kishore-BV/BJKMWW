@@ -53,7 +53,7 @@ export const BANNERS: Banner[] = [
   },
   {
     id: 2,
-    image: "https://images.unsplash.com/photo-1601362840469-51e4d8d59085?auto=format&fit=crop&q=80&w=1920",
+    image: "/BJK01.png",
     title: "Summer Shine Package",
     subtitle: "Beat the dust and heat. Keep your car cool and sparkling.",
     seasonTag: "Summer Glow"

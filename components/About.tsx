@@ -7,27 +7,27 @@ const About: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="w-full lg:w-1/2 relative">
-             <div className="relative z-10 bg-gray-100 p-4 rounded-[40px] shadow-2xl">
-               <img 
-                 src="https://picsum.photos/seed/carvan/800/600" 
-                 alt="Our Mobile Van" 
-                 className="rounded-[32px] w-full object-cover aspect-video shadow-inner"
-               />
-               <div className="absolute -bottom-10 -right-10 bg-white p-6 rounded-3xl shadow-2xl hidden md:block">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-orange-600 text-white p-3 rounded-2xl">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="font-bold text-gray-900 text-xl">Elite Grade</p>
-                      <p className="text-gray-500 text-sm">Professional Equipment</p>
-                    </div>
+            <div className="relative z-10 bg-gray-100 p-4 rounded-[40px] shadow-2xl">
+              <img
+                src="/BJK02.png"
+                alt="Our Mobile Van"
+                className="rounded-[32px] w-full object-cover aspect-video shadow-inner"
+              />
+              <div className="absolute -bottom-10 -right-10 bg-white p-6 rounded-3xl shadow-2xl hidden md:block">
+                <div className="flex items-center gap-4">
+                  <div className="bg-orange-600 text-white p-3 rounded-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
                   </div>
-               </div>
-             </div>
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-orange-50 rounded-full -z-10 blur-3xl opacity-60"></div>
+                  <div>
+                    <p className="font-bold text-gray-900 text-xl">Elite Grade</p>
+                    <p className="text-gray-500 text-sm">Professional Equipment</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-orange-50 rounded-full -z-10 blur-3xl opacity-60"></div>
           </div>
 
           <div className="w-full lg:w-1/2">
@@ -36,7 +36,7 @@ const About: React.FC = () => {
             <p className="text-gray-600 text-lg mb-8">
               BJK Mobile Water Wash is powered by state-of-the-art high-pressure washing machines and steam cleaners. Our customized service vans carry everything needed—water, power, and professional chemicals.
             </p>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
               <div className="flex items-start space-x-4">
                 <div className="bg-orange-100 p-3 rounded-xl">
