@@ -44,9 +44,9 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
   const useCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setBookingData(prev => ({ 
-          ...prev, 
-          address: `Lat: ${position.coords.latitude}, Lng: ${position.coords.longitude} (Checking exact address...)` 
+        setBookingData(prev => ({
+          ...prev,
+          address: `Lat: ${position.coords.latitude}, Lng: ${position.coords.longitude} (Checking exact address...)`
         }));
       });
     }
@@ -71,7 +71,7 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
             <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-8">Select Your Plan</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {SERVICE_PACKAGES.map((pkg) => (
-                <div 
+                <div
                   key={pkg.id}
                   onClick={() => handlePlanSelect(pkg.id)}
                   className={`cursor-pointer bg-white p-6 rounded-3xl border-2 transition-all hover:scale-105 ${bookingData.planId === pkg.id ? 'border-orange-500 bg-orange-50' : 'border-transparent shadow-lg'}`}
@@ -119,7 +119,7 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
-                    <input 
+                    <input
                       required
                       name="name"
                       value={bookingData.name}
@@ -130,7 +130,7 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
-                    <input 
+                    <input
                       required
                       name="phone"
                       value={bookingData.phone}
@@ -143,7 +143,7 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
 
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Car Model & Number</label>
-                  <input 
+                  <input
                     required
                     name="carModel"
                     value={bookingData.carModel}
@@ -161,7 +161,7 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
                       Use My Location
                     </button>
                   </div>
-                  <textarea 
+                  <textarea
                     required
                     name="address"
                     value={bookingData.address}
@@ -175,7 +175,7 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Preferred Date</label>
-                    <input 
+                    <input
                       required
                       type="date"
                       name="date"
@@ -186,7 +186,7 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Preferred Time Slot</label>
-                    <select 
+                    <select
                       required
                       name="time"
                       value={bookingData.time}
@@ -203,14 +203,14 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
                 </div>
 
                 <div className="pt-4 flex gap-4">
-                  <button 
+                  <button
                     type="button"
                     onClick={onCancel}
                     className="flex-1 py-4 bg-gray-100 text-gray-900 font-bold rounded-2xl hover:bg-gray-200 transition-all"
                   >
                     Cancel
                   </button>
-                  <button 
+                  <button
                     type="submit"
                     className="flex-[2] py-4 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition-all shadow-lg shadow-orange-200"
                   >
