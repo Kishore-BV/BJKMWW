@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import OTPCountdown from "@/components/ui/otp-countdown";
+import Countdown from "@/components/ui/countdown";
 import { jwtDecode } from "jwt-decode";
 import { SERVICE_PACKAGES } from '../constants';
 import { BookingData } from '../types';
@@ -464,7 +464,7 @@ const BookingFlow: React.FC<BookingFlowProps> = ({ initialPlanId, onComplete, on
                     gap: "8px",
                     marginBottom: "32px",
                   }}>
-                    <OTPCountdown
+                    <Countdown
                       startFrom={90}
                       onComplete={handleTimerComplete}
                     />
